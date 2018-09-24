@@ -7,6 +7,7 @@
 #include <functional>
 
 #include "json.hpp"
+#include "Config.hpp"
 #include "Httpops.hpp"
 #include "ActiveCampaign.hpp"
 
@@ -14,18 +15,21 @@ using json = nlohmann::json;
 
 class Account : public ActiveCampaign
 {
-	std::string action;
-	std::unique_ptr<HttpOps> httpOps;
+	std::string m_action;
+	std::unique_ptr<HttpOps> m_httpOps;
+	std::unique_ptr<Config> m_config;
 public:
 	Account(const std::string & action,
-		std::unique_ptr<HttpOps> httpOps)
-		:action(action), httpOps(std::move(httpOps))
+		std::unique_ptr<HttpOps> httpOps,
+		std::unique_ptr<Config> config)
+		:m_action(action), m_httpOps(std::move(httpOps)), m_config(std::move(config))
 	{
 	}
 
 	json api(const json & data)
 	{
-		return httpOps->sendData(data);
+		std::string url;
+		return m_httpOps->sendData(url, data);
 	}
 };
 

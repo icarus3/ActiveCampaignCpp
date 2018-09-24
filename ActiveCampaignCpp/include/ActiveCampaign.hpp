@@ -9,6 +9,7 @@ class ActiveCampaign
 {
 public:
 	virtual json api(const json & data = nullptr) = 0;
+	virtual ~ActiveCampaign() = default;
 };
 
 #endif

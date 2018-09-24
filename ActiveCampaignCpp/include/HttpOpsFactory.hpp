@@ -10,24 +10,24 @@
 
 class HttpOpsFactory
 {
-	std::map<std::string, std::function<std::unique_ptr<HttpOps>()>> factories;
+	std::map<std::string, std::function<std::unique_ptr<HttpOps>()>> m_factories;
 
 public:
 
 	HttpOpsFactory()
 	{
-		factories["GET"] = [] {
+		m_factories["GET"] = [] {
 			return std::make_unique<HttpGetOps>();
 		};
 
-		factories["POST"] = [] {
+		m_factories["POST"] = [] {
 			return std::make_unique<HttpPostOps>();
 		};
 	}
 
 	std::unique_ptr<HttpOps> makeHttpOps(const std::string& name)
 	{
-		return factories[name]();
+		return m_factories[name]();
 	}
 };
 

@@ -12,19 +12,19 @@
 
 class ActiveCampaignFactory
 {
-	std::map<std::string, std::function<std::unique_ptr<ActiveCampaign>()>> factories;
+	std::map<std::string, std::function<std::unique_ptr<ActiveCampaign>()>> m_factories;
 public:
 
-	ActiveCampaignFactory()
+	ActiveCampaignFactory(std::unique_ptr<Config> config)
 	{
-		factories["account/view"] = [] {
-			return std::make_unique<Account>("account_view", HttpOpsFactory().makeHttpOps("GET"));
+		m_factories["account/view"] = [&config] {
+			return std::make_unique<Account>("account_view", HttpOpsFactory().makeHttpOps("GET"), std::move(config));
 		};
 	}
 
 	std::unique_ptr<ActiveCampaign> makeActiveCampaign(const std::string& name)
 	{
-		return factories[name]();
+		return m_factories[name]();
 	}
 };
 
