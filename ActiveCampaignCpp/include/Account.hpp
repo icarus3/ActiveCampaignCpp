@@ -7,29 +7,55 @@
 #include <functional>
 
 #include "json.hpp"
+#include "Exception.hpp"
 #include "Config.hpp"
 #include "Httpops.hpp"
+#include "HttpOpsFactory.hpp"
 #include "ActiveCampaign.hpp"
+#include "UrlHandler.hpp"
 
 using json = nlohmann::json;
 
 class Account : public ActiveCampaign
 {
-	std::string m_action;
-	std::unique_ptr<HttpOps> m_httpOps;
-	std::unique_ptr<Config> m_config;
+	const Config * m_config;
+	const std::map< const std::string, std::function<json(const std::string & action, const json & data)> > m_actions;
+
 public:
-	Account(const std::string & action,
-		std::unique_ptr<HttpOps> httpOps,
-		std::unique_ptr<Config> config)
-		:m_action(action), m_httpOps(std::move(httpOps)), m_config(std::move(config))
+	Account(const Config * config) 
+			: m_config(config), m_actions
+			{
+				{"account_view", std::bind(&Account::accountView, this, std::placeholders::_1, std::placeholders::_2)}
+			}
 	{
+		int i = 0;
 	}
 
-	json api(const json & data)
+	void getSupportedActions(std::vector<std::string> & actions)
 	{
-		std::string url;
-		return m_httpOps->sendData(url, data);
+		actions.reserve(m_actions.size());
+		for (auto keyValue : m_actions)
+		{
+			actions.push_back(keyValue.first);
+		}
+	}
+
+	json accountView(const std::string & action,  const json & data)
+	{
+		(void)data;
+		std::string url = UrlHandler::makeUrl(action, m_config, data);
+		return nullptr;
+	}
+
+	json api(const std::string & action, const json & data) override
+	{
+		if(m_actions.find(action) == m_actions.end())
+		{
+			throw new Exception("Action:" + action + " not supported.");
+		}
+
+		std::function<json(const std::string & action, const json &)> func =  m_actions.at(action);
+		return func(action, data);
 	}
 };
 

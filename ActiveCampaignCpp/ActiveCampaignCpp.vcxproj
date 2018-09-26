@@ -132,9 +132,11 @@
     <ClInclude Include="include\ActiveCampaign.hpp" />
     <ClInclude Include="include\ActiveCampaignFactory.hpp" />
     <ClInclude Include="include\Config.hpp" />
+    <ClInclude Include="include\Exception.hpp" />
     <ClInclude Include="include\HttpOps.hpp" />
     <ClInclude Include="include\HttpOpsFactory.hpp" />
     <ClInclude Include="include\json.hpp" />
+    <ClInclude Include="include\UrlHandler.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
