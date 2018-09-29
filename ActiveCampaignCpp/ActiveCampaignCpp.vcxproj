@@ -135,6 +135,7 @@
     <ClInclude Include="include\Exception.hpp" />
     <ClInclude Include="include\HttpOps.hpp" />
     <ClInclude Include="include\HttpOpsFactory.hpp" />
+    <ClInclude Include="include\IActiveCampaign.hpp" />
     <ClInclude Include="include\json.hpp" />
     <ClInclude Include="include\UrlHandler.hpp" />
   </ItemGroup>
