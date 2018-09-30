@@ -7,6 +7,8 @@
 #include <functional>
 
 #include "Account.hpp"
+#include "Address.hpp"
+#include "List.hpp"
 #include "HttpOpsFactory.hpp"
 #include "ActiveCampaign.hpp"
 
@@ -20,6 +22,12 @@ public:
 	{
 		m_factories["account"] = [=] {
 			return std::make_unique<Account>(config);
+		};
+		m_factories["address"] = [=] {
+			return std::make_unique<Address>(config);
+		};
+		m_factories["list"] = [=] {
+			return std::make_unique<List>(config);
 		};
 	}
 

@@ -4,28 +4,17 @@
 #include <string>
 
 #include "Exception.hpp"
-#include "curl/curl.h"
 
 class Config
 {
 	std::string m_url;
 	std::string m_apiKey;
 	std::string m_outputFormat;
-	CURL * m_curl;
 
 public:
 	Config(const std::string & url, const std::string & apiKey)
-		: m_url(url), m_apiKey(apiKey), m_outputFormat("json"), m_curl(curl_easy_init())
+		: m_url(url), m_apiKey(apiKey), m_outputFormat("json")
 	{
-		if (!m_curl)
-		{
-			throw Exception("Unable to initialize curl");
-		}
-	}
-
-	~Config()
-	{
-		curl_easy_cleanup(m_curl);
 	}
 
 	std::string getApiKey() const
@@ -42,12 +31,6 @@ public:
 	{
 		return 	m_outputFormat;
 	}
-
-	CURL * getCurl() const
-	{
-		return m_curl;
-	}
-
 };
 
 #endif
