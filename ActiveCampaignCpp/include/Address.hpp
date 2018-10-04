@@ -33,7 +33,6 @@ public:
 		std::string url = UrlHandler::makeUrlWithParameters(action, m_config, data);
 		return nullptr;
 	}
-
 };
 
 #endif

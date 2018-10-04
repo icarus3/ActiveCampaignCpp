@@ -29,12 +29,9 @@ public:
 
 	json accountView(const std::string & action,  const json & data)
 	{
-		(void)data;
 		std::string url = UrlHandler::makeUrlWithParameters(action, m_config, data);
 		std::unique_ptr<HttpOps> httpGet = HttpOpsFactory().makeHttpOps("GET");
-		httpGet->sendData(url);
-
-		return nullptr;
+		return httpGet->sendData(url);
 	}
 
 };

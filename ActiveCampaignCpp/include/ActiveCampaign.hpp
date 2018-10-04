@@ -28,10 +28,9 @@ public:
 		m_supportedActions( supportedActions ),
 		m_supportedActionsHandlers( supportedActionsHandlers )
 	{
-
 	}
 
-	json api(const std::string & action, const json & data = nullptr)
+	json api(const std::string & action, const json & data = {})
 	{
 		auto it = std::find(std::begin(m_supportedActions), std::end(m_supportedActions), action);
 		if (it == std::end(m_supportedActions))

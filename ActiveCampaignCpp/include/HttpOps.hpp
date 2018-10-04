@@ -19,7 +19,7 @@ class HttpOps
 {
 public:
 
-	virtual json sendData(const std::string & url, const std::string& data = nullptr) = 0;
+	virtual json sendData(const std::string & url, const std::string& data = "") = 0;
 	virtual ~HttpOps() = default;
 };
 
@@ -28,8 +28,10 @@ class HttpGetOps : public HttpOps
 
 public:
 
-	json sendData(const std::string & url, const std::string& data) override
+	json sendData(const std::string & url, const std::string& data ) override
 	{
+		(void)data;
+
 		LibCurl* libCurl = LibCurl::getLibCurlImpl();
 		CURL * curl = libCurl->getCurl();
 		std::string readBuffer;
