@@ -2,10 +2,14 @@
 #define ACTIVECAMPAIGN_HPP
 
 #include <vector>
-#include <vector>
+#include <string>
+#include <functional>
 
 #include "json.hpp"
 #include "IActiveCampaign.hpp"
+#include "UrlHandler.hpp"
+#include "HttpOps.hpp"
+#include "HttpOpsFactory.hpp"
 
 using json = nlohmann::json;
 
@@ -30,7 +34,23 @@ public:
 	{
 	}
 
-	json api(const std::string & action, const json & data = {})
+	json post(const std::string & action, const json & data) override
+	{
+		std::string url = UrlHandler::makeUrl(action, m_config);
+		std::string parameters = UrlHandler::makeParameters(m_config, data);
+
+		std::unique_ptr<HttpOps> httpPost = HttpOpsFactory().makeHttpOps("POST");
+		return httpPost->sendData(url, parameters);
+	}
+
+	json get(const std::string & action, const json & data) override
+	{
+		std::string url = UrlHandler::makeUrlWithParameters(action, m_config, data);
+		std::unique_ptr<HttpOps> httpGet = HttpOpsFactory().makeHttpOps("GET");
+		return httpGet->sendData(url);
+	}
+
+	json api(const std::string & action, const json & data = {}) override
 	{
 		auto it = std::find(std::begin(m_supportedActions), std::end(m_supportedActions), action);
 		if (it == std::end(m_supportedActions))
@@ -42,7 +62,7 @@ public:
 		return func(action, data);
 	}
 
-	void getSupportedActions(std::vector<std::string> & actions)
+	void getSupportedActions(std::vector<std::string> & actions) override
 	{
 		actions = m_supportedActions;
 	}

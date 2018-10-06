@@ -5,15 +5,13 @@
 
 #include "Config.hpp"
 #include "json.hpp"
-
+#include "LibCurl.hpp"
 
 class UrlHandler
 {
 public:
 	static std::string makeParameters(const Config * config, const json & data)
 	{
-		//std::string url = "api_output=" + config->getFormat()
-		//				+ "&api_key=" + config->getApiKey();
 		std::string url = "";
 		for (auto item : data.items())
 		{

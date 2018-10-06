@@ -2,17 +2,12 @@
 #define ADDRESS_HPP
 
 #include <iostream>
-#include <map>
 #include <string>
 #include <functional>
 
 #include "json.hpp"
-#include "Exception.hpp"
 #include "Config.hpp"
-#include "Httpops.hpp"
-#include "HttpOpsFactory.hpp"
 #include "ActiveCampaign.hpp"
-#include "UrlHandler.hpp"
 
 using json = nlohmann::json;
 
@@ -29,9 +24,7 @@ public:
 
 	json addressAdd(const std::string & action, const json & data)
 	{
-		(void)data;
-		std::string url = UrlHandler::makeUrlWithParameters(action, m_config, data);
-		return nullptr;
+		return post(action, data);
 	}
 };
 

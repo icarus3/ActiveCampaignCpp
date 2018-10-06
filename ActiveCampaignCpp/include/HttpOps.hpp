@@ -1,6 +1,8 @@
 #ifndef HTTPOPS_HPP
 #define HTTPOPS_HPP
 
+#include <string>
+
 #include "json.hpp"
 #include "LibCurl.hpp"
 

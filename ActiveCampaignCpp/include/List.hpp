@@ -2,17 +2,12 @@
 #define LIST_HPP
 
 #include <iostream>
-#include <map>
 #include <string>
 #include <functional>
 
 #include "json.hpp"
-#include "Exception.hpp"
 #include "Config.hpp"
-#include "Httpops.hpp"
-#include "HttpOpsFactory.hpp"
 #include "ActiveCampaign.hpp"
-#include "UrlHandler.hpp"
 
 using json = nlohmann::json;
 
@@ -43,65 +38,58 @@ public:
 
 	json listAdd(const std::string & action, const json & data)
 	{
-		std::string url = UrlHandler::makeUrl(action, m_config);
-		std::string parameters = UrlHandler::makeParameters(m_config, data);
-
-		std::unique_ptr<HttpOps> httpPost = HttpOpsFactory().makeHttpOps("POST");
-		return httpPost->sendData(url, parameters);
+		return post(action, data);
 	}
 
 	json listList(const std::string & action, const json & data)
 	{
-		std::string url = UrlHandler::makeUrlWithParameters(action, m_config, data);
-		std::unique_ptr<HttpOps> httpGet = HttpOpsFactory().makeHttpOps("GET");
-		return httpGet->sendData(url);
+		return get(action, data);
 	}
 
 	json listDelete(const std::string & action, const json & data)
 	{
-		return nullptr;
+		return get(action, data);
 	}
 
 	json listDeleteList(const std::string & action, const json & data)
 	{
-		return nullptr;
+		return get(action, data);
 	}
 
 	json listEdit(const std::string & action, const json & data)
 	{
-		return nullptr;
+		return post(action, data);
 	}
 
 	json listFieldAdd(const std::string & action, const json & data)
 	{
-		return nullptr;
+		return post(action, data);
 	}
 	
 	json listFieldDelete(const std::string & action, const json & data)
 	{
-		return nullptr;
+		return get(action, data);
 	}
 	
 	json listFieldEdit(const std::string & action, const json & data)
 	{
-		return nullptr;
+		return post(action, data);
 	}
 
 	json listFieldView(const std::string & action, const json & data)
 	{
-		return nullptr;
+		return get(action, data);
 	}
 		
 	json listPaginator(const std::string & action, const json & data)
 	{
-		return nullptr;
+		return get(action, data);
 	}
 	
 	json listView(const std::string & action, const json & data)
 	{
-		return nullptr;
+		return get(action, data);
 	}
-
 };
 
 
