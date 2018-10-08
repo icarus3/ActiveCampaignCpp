@@ -132,6 +132,9 @@
     <ClInclude Include="include\ActiveCampaign.hpp" />
     <ClInclude Include="include\ActiveCampaignFactory.hpp" />
     <ClInclude Include="include\Address.hpp" />
+    <ClInclude Include="include\Automation.hpp" />
+    <ClInclude Include="include\Branding.hpp" />
+    <ClInclude Include="include\Campaign.hpp" />
     <ClInclude Include="include\Config.hpp" />
     <ClInclude Include="include\LibCurl.hpp" />
     <ClInclude Include="include\Exception.hpp" />
