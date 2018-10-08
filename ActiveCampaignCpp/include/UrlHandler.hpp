@@ -7,6 +7,8 @@
 #include "json.hpp"
 #include "LibCurl.hpp"
 
+using json = nlohmann::json;
+
 class UrlHandler
 {
 public:

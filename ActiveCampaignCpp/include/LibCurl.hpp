@@ -25,6 +25,7 @@ public:
 	{
 		curl_easy_cleanup(m_curl);
 		curl_global_cleanup();
+		m_curl = NULL;
 	}
 
 	CURL * getCurl()
