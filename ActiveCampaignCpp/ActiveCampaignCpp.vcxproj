@@ -136,6 +136,10 @@
     <ClInclude Include="include\Branding.hpp" />
     <ClInclude Include="include\Campaign.hpp" />
     <ClInclude Include="include\Config.hpp" />
+    <ClInclude Include="include\Contact.hpp" />
+    <ClInclude Include="include\Deal.hpp" />
+    <ClInclude Include="include\Form.hpp" />
+    <ClInclude Include="include\Group.hpp" />
     <ClInclude Include="include\LibCurl.hpp" />
     <ClInclude Include="include\Exception.hpp" />
     <ClInclude Include="include\HttpOps.hpp" />
@@ -143,7 +147,15 @@
     <ClInclude Include="include\IActiveCampaign.hpp" />
     <ClInclude Include="include\json.hpp" />
     <ClInclude Include="include\List.hpp" />
+    <ClInclude Include="include\Message.hpp" />
+    <ClInclude Include="include\Organization.hpp" />
+    <ClInclude Include="include\Settings.hpp" />
+    <ClInclude Include="include\SingleSignOn.hpp" />
+    <ClInclude Include="include\Tags.hpp" />
+    <ClInclude Include="include\Tasks.hpp" />
     <ClInclude Include="include\UrlHandler.hpp" />
+    <ClInclude Include="include\User.hpp" />
+    <ClInclude Include="include\Webhook.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
