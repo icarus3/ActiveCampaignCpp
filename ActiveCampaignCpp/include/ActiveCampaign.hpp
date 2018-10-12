@@ -28,7 +28,7 @@ public:
 	ActiveCampaign( const Config * config,
 					std::initializer_list<std::string> supportedActions,
 					std::initializer_list<Handler> supportedActionsHandlers ) :
-		m_config( config ),
+		m_config(config),
 		m_supportedActions( supportedActions ),
 		m_supportedActionsHandlers( supportedActionsHandlers )
 	{

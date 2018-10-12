@@ -8,10 +8,12 @@
 #include "json.hpp"
 #include "Config.hpp"
 #include "ActiveCampaign.hpp"
+#include "AutoRegister.hpp"
+
 
 using json = nlohmann::json;
 
-class WebHook : public ActiveCampaign
+class WebHook : public ActiveCampaign, public AutoRegister<WebHook>
 {
 
 public:
@@ -28,6 +30,17 @@ public:
 				std::bind(&WebHook::webHookView, this, std::placeholders::_1, std::placeholders::_2)
 			})
 	{
+		(void)s_bRegistered;
+	}
+
+	static std::unique_ptr<ActiveCampaign> CreateMethod(const Config * config)
+	{
+		return std::make_unique<WebHook>(config);
+	}
+
+	static std::string GetFactoryName()
+	{
+		return "WebHook";
 	}
 
 	json webHookAdd(const std::string & action, const json & data)

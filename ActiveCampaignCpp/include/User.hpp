@@ -8,10 +8,12 @@
 #include "json.hpp"
 #include "Config.hpp"
 #include "ActiveCampaign.hpp"
+#include "AutoRegister.hpp"
+
 
 using json = nlohmann::json;
 
-class User : public ActiveCampaign
+class User : public ActiveCampaign, public AutoRegister<User>
 {
 
 public:
@@ -31,6 +33,17 @@ public:
 				std::bind(&User::userViewUsername, this, std::placeholders::_1, std::placeholders::_2)
 			})
 	{
+		(void)s_bRegistered;
+	}
+
+	static std::unique_ptr<ActiveCampaign> CreateMethod(const Config * config)
+	{
+		return std::make_unique<User>(config);
+	}
+
+	static std::string GetFactoryName()
+	{
+		return "User";
 	}
 
 	json userAdd(const std::string & action, const json & data)

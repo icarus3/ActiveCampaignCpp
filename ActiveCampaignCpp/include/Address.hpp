@@ -7,11 +7,12 @@
 
 #include "json.hpp"
 #include "Config.hpp"
+#include "AutoRegister.hpp"
 #include "ActiveCampaign.hpp"
 
 using json = nlohmann::json;
 
-class Address : public ActiveCampaign
+class Address : public ActiveCampaign, public AutoRegister<Address>
 {
 
 public:
@@ -29,6 +30,17 @@ public:
 				std::bind(&Address::addressView, this, std::placeholders::_1, std::placeholders::_2) 
 			})
 	{
+		(void)s_bRegistered;
+	}
+
+	static std::unique_ptr<ActiveCampaign> CreateMethod(const Config * config)
+	{
+		return std::make_unique<Address>(config);
+	}
+
+	static std::string GetFactoryName()
+	{
+		return "Address";
 	}
 
 	json addressAdd(const std::string & action, const json & data)

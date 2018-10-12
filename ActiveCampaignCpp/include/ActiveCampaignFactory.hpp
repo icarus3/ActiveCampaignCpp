@@ -14,27 +14,36 @@
 
 class ActiveCampaignFactory
 {
-	std::map<std::string, std::function<std::unique_ptr<ActiveCampaign>()>> m_factories;
+	using TCreateMethod = std::unique_ptr<ActiveCampaign>(*)(const Config * config);
 
 public:
+	ActiveCampaignFactory() = delete;
 
-	ActiveCampaignFactory(Config * config)
+	static bool Register(const std::string name, TCreateMethod createFunc)
 	{
-		m_factories["account"] = [=] {
-			return std::make_unique<Account>(config);
-		};
-		m_factories["address"] = [=] {
-			return std::make_unique<Address>(config);
-		};
-		m_factories["list"] = [=] {
-			return std::make_unique<List>(config);
-		};
+		auto it = s_methods.find(name);
+		if (it == s_methods.end())
+		{
+			s_methods[name] = createFunc;
+			return true;
+		}
+		return false;
 	}
 
-	std::unique_ptr<ActiveCampaign> makeActiveCampaign(const std::string& name)
+	static std::unique_ptr<ActiveCampaign> Create(const std::string& name, const Config * config)
 	{
-		return m_factories[name]();
+		auto it = s_methods.find(name);
+		if (it != s_methods.end())
+		{
+			return it->second(config);
+		}
+		return nullptr;
 	}
+
+private:
+	static std::map<std::string, TCreateMethod> s_methods;
 };
+
+std::map<std::string, ActiveCampaignFactory::TCreateMethod> ActiveCampaignFactory::s_methods;
 
 #endif
