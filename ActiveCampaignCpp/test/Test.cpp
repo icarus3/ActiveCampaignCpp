@@ -5,6 +5,7 @@
 #include "Config.hpp"
 #include "UrlHandler.hpp"
 #include "ActiveCampaign.hpp"
+#include "ActiveCampaignFactory.hpp"
 
 #include "json.hpp"
 
@@ -70,6 +71,21 @@ TEST(ActiveCampaignTest, GetSupportedActionsAndAPI)
 	
 	json jsonResponse = ac->api("test_action");
 	ASSERT_EQ(jsonResponse["ret"], 0);
+}
+
+TEST(ActiveCampaignTest, AutoRegisterTest)
+{
+	std::vector< std::string > expected = {"Account","Address", "Automation", "Branding", "Campaign", "Contact", "Deal",
+											"Form", "Group", "List", "Message", "Organization", "Settings", "SingleSignOn",
+											"Tags", "Tasks", "User", "WebHook"};
+
+	std::unique_ptr<Config> config = std::make_unique<Config>("http://a.b.com", "xyz");
+
+	for (auto str : expected)
+	{
+		//In case of a problem, it will throw an exception
+		auto ac = ActiveCampaignFactory::Create(str, config.get());
+	}
 }
 
 int main(int argc, char **argv)

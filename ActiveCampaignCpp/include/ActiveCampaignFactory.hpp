@@ -8,7 +8,22 @@
 
 #include "Account.hpp"
 #include "Address.hpp"
+#include "Automation.hpp"
+#include "Branding.hpp"
+#include "Campaign.hpp"
+#include "Contact.hpp"
+#include "Deal.hpp"
+#include "Form.hpp"
+#include "Group.hpp"
 #include "List.hpp"
+#include "Message.hpp"
+#include "Organization.hpp"
+#include "Settings.hpp"
+#include "SingleSignOn.hpp"
+#include "Tags.hpp"
+#include "Tasks.hpp"
+#include "User.hpp"
+#include "Webhook.hpp"
 #include "HttpOpsFactory.hpp"
 #include "ActiveCampaign.hpp"
 
@@ -37,7 +52,7 @@ public:
 		{
 			return it->second(config);
 		}
-		return nullptr;
+		throw new Exception("Action:" + name + " not registered.");
 	}
 
 private:
