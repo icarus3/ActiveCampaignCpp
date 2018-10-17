@@ -8,14 +8,14 @@ Usage
 	auto ac = ActiveCampaignFactory::Create("List", config.get());
 
 	const json postData = {
-							{ "name" ,			"Dr Who" },
+							{ "name" ,		"Dr Who" },
 							{ "sender_name" ,	"Bleh Bleh" },
 							{ "sender_zip" ,	"12345" },
 							{ "sender_city",	"London" },
 							{ "sender_addr1" ,	"raxacoricofallapatorius" },
-							{ "sender_country", "UK" },
+							{ "sender_country", 	"UK" },
 							{ "sender_url",		"http://a.b.com" },
-							{ "sender_reminder","Please unsubscribe" }
+							{ "sender_reminder",	"Please Subscribe" }
 						};
 
 	json result = ac->api("list_add", postData);
