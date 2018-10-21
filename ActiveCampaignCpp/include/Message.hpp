@@ -17,7 +17,7 @@ class Message : public ActiveCampaign, public AutoRegister<Message>
 {
 
 public:
-	Message(const Config * config) :
+	Message(const std::shared_ptr<Config> & config) :
 		ActiveCampaign(config,
 			{	"message_add", "message_delete", "message_delete_list", "message_edit", "message_list",
 				"message_template_add", "message_template_delete", "message_template_delete_list",
@@ -43,7 +43,7 @@ public:
 		(void)s_bRegistered;
 	}
 
-	static std::unique_ptr<ActiveCampaign> CreateMethod(const Config * config)
+	static std::unique_ptr<ActiveCampaign> CreateMethod(const std::shared_ptr<Config> & config)
 	{
 		return std::make_unique<Message>(config);
 	}

@@ -17,7 +17,7 @@ class User : public ActiveCampaign, public AutoRegister<User>
 {
 
 public:
-	User(const Config * config) :
+	User(const std::shared_ptr<Config> & config) :
 		ActiveCampaign(config,
 			{	"user_add", "user_delete", "user_delete_list", "user_edit",
 				"user_list", "user_me", "user_view", "user_view_email", "user_view_username"
@@ -36,7 +36,7 @@ public:
 		(void)s_bRegistered;
 	}
 
-	static std::unique_ptr<ActiveCampaign> CreateMethod(const Config * config)
+	static std::unique_ptr<ActiveCampaign> CreateMethod(const std::shared_ptr<Config> & config)
 	{
 		return std::make_unique<User>(config);
 	}

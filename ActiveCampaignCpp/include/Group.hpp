@@ -17,7 +17,7 @@ class Group : public ActiveCampaign, public AutoRegister<Group>
 {
 
 public:
-	Group(const Config * config) :
+	Group(const std::shared_ptr<Config> & config) :
 		ActiveCampaign(config,
 			{	"group_add", "group_delete", "group_delete_list",
 				"group_edit", "group_list", "group_view"
@@ -33,7 +33,7 @@ public:
 		(void)s_bRegistered;
 	}
 
-	static std::unique_ptr<ActiveCampaign> CreateMethod(const Config * config)
+	static std::unique_ptr<ActiveCampaign> CreateMethod(const std::shared_ptr<Config> & config)
 	{
 		return std::make_unique<Group>(config);
 	}

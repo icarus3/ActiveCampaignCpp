@@ -16,7 +16,7 @@ class Address : public ActiveCampaign, public AutoRegister<Address>
 {
 
 public:
-	Address(const Config * config) :
+	Address(const std::shared_ptr<Config> & config) :
 		ActiveCampaign(config,
 			{	"address_add", "address_delete", "address_delete_group", "address_delete_list",
 				"address_edit", "address_list", "address_view"
@@ -33,7 +33,7 @@ public:
 		(void)s_bRegistered;
 	}
 
-	static std::unique_ptr<ActiveCampaign> CreateMethod(const Config * config)
+	static std::unique_ptr<ActiveCampaign> CreateMethod(const std::shared_ptr<Config> & config)
 	{
 		return std::make_unique<Address>(config);
 	}

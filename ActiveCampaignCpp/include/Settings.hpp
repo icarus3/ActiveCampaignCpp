@@ -17,7 +17,7 @@ class Settings : public ActiveCampaign, public AutoRegister<Settings>
 {
 
 public:
-	Settings(const Config * config) :
+	Settings(const std::shared_ptr<Config> & config) :
 		ActiveCampaign(config,
 			{ "settings_list"
 			},
@@ -27,7 +27,7 @@ public:
 		(void)s_bRegistered;
 	}
 
-	static std::unique_ptr<ActiveCampaign> CreateMethod(const Config * config)
+	static std::unique_ptr<ActiveCampaign> CreateMethod(const std::shared_ptr<Config> & config)
 	{
 		return std::make_unique<Settings>(config);
 	}

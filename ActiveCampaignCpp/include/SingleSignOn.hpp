@@ -17,7 +17,7 @@ class SingleSignOn : public ActiveCampaign, public AutoRegister<SingleSignOn>
 {
 
 public:
-	SingleSignOn(const Config * config) :
+	SingleSignOn(const std::shared_ptr<Config> & config) :
 		ActiveCampaign(config,
 			{ "singlesignon"
 			},
@@ -27,7 +27,7 @@ public:
 		(void)s_bRegistered;
 	}
 
-	static std::unique_ptr<ActiveCampaign> CreateMethod(const Config * config)
+	static std::unique_ptr<ActiveCampaign> CreateMethod(const std::shared_ptr<Config> & config)
 	{
 		return std::make_unique<SingleSignOn>(config);
 	}

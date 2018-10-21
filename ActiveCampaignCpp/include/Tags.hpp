@@ -17,7 +17,7 @@ class Tags : public ActiveCampaign, public AutoRegister<Tags>
 {
 
 public:
-	Tags(const Config * config) :
+	Tags(const std::shared_ptr<Config> & config) :
 		ActiveCampaign(config,
 			{ "tags_list"
 			},
@@ -27,7 +27,7 @@ public:
 		(void)s_bRegistered;
 	}
 
-	static std::unique_ptr<ActiveCampaign> CreateMethod(const Config * config)
+	static std::unique_ptr<ActiveCampaign> CreateMethod(const std::shared_ptr<Config> & config)
 	{
 		return std::make_unique<Tags>(config);
 	}

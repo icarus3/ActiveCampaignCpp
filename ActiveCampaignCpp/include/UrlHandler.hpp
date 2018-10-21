@@ -12,7 +12,7 @@ using json = nlohmann::json;
 class UrlHandler
 {
 public:
-	static std::string makeParameters(const Config * config, const json & data)
+	static std::string makeParameters(const std::shared_ptr<Config> & config, const json & data)
 	{
 		std::string url = "";
 		for (auto item : data.items())
@@ -50,14 +50,14 @@ public:
 		return url;
 	}
 
-	static std::string makeUrl(const std::string& action, const Config * config)
+	static std::string makeUrl(const std::string& action, const std::shared_ptr<Config> & config)
 	{
 		return config->getUrl() + "/admin/api.php?api_action=" + action
 								+ "&api_output=" + config->getFormat()
 								+ "&api_key=" + config->getApiKey();;
 	}
 
-	static std::string makeUrlWithParameters(const std::string& action, const Config * config, const json & data)
+	static std::string makeUrlWithParameters(const std::string& action, const std::shared_ptr<Config> & config, const json & data)
 	{
 		return makeUrl(action, config) + "&" + makeParameters(config, data);
 	}

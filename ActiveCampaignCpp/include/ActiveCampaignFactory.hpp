@@ -29,7 +29,7 @@
 
 class ActiveCampaignFactory
 {
-	using TCreateMethod = std::unique_ptr<ActiveCampaign>(*)(const Config * config);
+	using TCreateMethod = std::unique_ptr<ActiveCampaign>(*)(const std::shared_ptr<Config> & config);
 
 public:
 	ActiveCampaignFactory() = delete;
@@ -45,7 +45,7 @@ public:
 		return false;
 	}
 
-	static std::unique_ptr<ActiveCampaign> Create(const std::string& name, const Config * config)
+	static std::unique_ptr<ActiveCampaign> Create(const std::string& name, const std::shared_ptr<Config> & config)
 	{
 		auto it = s_methods.find(name);
 		if (it != s_methods.end())

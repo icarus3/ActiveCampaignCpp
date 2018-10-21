@@ -17,7 +17,7 @@ class Form : public ActiveCampaign, public AutoRegister<Form>
 {
 
 public:
-	Form(const Config * config) :
+	Form(const std::shared_ptr<Config> & config) :
 		ActiveCampaign(config,
 			{	"form_getforms",
 				"form_html"
@@ -29,7 +29,7 @@ public:
 		(void)s_bRegistered;
 	}
 
-	static std::unique_ptr<ActiveCampaign> CreateMethod(const Config * config)
+	static std::unique_ptr<ActiveCampaign> CreateMethod(const std::shared_ptr<Config> & config)
 	{
 		return std::make_unique<Form>(config);
 	}

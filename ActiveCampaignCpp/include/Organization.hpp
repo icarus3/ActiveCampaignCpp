@@ -17,7 +17,7 @@ class Organization : public ActiveCampaign, public AutoRegister<Organization>
 {
 
 public:
-	Organization(const Config * config) :
+	Organization(const std::shared_ptr<Config> & config) :
 		ActiveCampaign(config,
 			{ "organization_list"
 			},
@@ -27,7 +27,7 @@ public:
 		(void)s_bRegistered;
 	}
 
-	static std::unique_ptr<ActiveCampaign> CreateMethod(const Config * config)
+	static std::unique_ptr<ActiveCampaign> CreateMethod(const std::shared_ptr<Config> & config)
 	{
 		return std::make_unique<Organization>(config);
 	}

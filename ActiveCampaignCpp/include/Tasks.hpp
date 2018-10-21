@@ -17,7 +17,7 @@ class Tasks : public ActiveCampaign, public AutoRegister<Tasks>
 {
 
 public:
-	Tasks(const Config * config) :
+	Tasks(const std::shared_ptr<Config> & config) :
 		ActiveCampaign(config,
 			{ "tasks_get"
 			},
@@ -27,7 +27,7 @@ public:
 		(void)s_bRegistered;
 	}
 
-	static std::unique_ptr<ActiveCampaign> CreateMethod(const Config * config)
+	static std::unique_ptr<ActiveCampaign> CreateMethod(const std::shared_ptr<Config> & config)
 	{
 		return std::make_unique<Tasks>(config);
 	}

@@ -17,7 +17,7 @@ class WebHook : public ActiveCampaign, public AutoRegister<WebHook>
 {
 
 public:
-	WebHook(const Config * config) :
+	WebHook(const std::shared_ptr<Config> & config) :
 		ActiveCampaign(config,
 			{	"webhook_add", "webhook_delete", "webhook_edit",
 				"webhook_events", "webhook_list", "webhook_view"
@@ -33,7 +33,7 @@ public:
 		(void)s_bRegistered;
 	}
 
-	static std::unique_ptr<ActiveCampaign> CreateMethod(const Config * config)
+	static std::unique_ptr<ActiveCampaign> CreateMethod(const std::shared_ptr<Config> & config)
 	{
 		return std::make_unique<WebHook>(config);
 	}

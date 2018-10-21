@@ -16,7 +16,7 @@ class Branding : public ActiveCampaign, public AutoRegister<Branding>
 {
 
 public:
-	Branding(const Config * config) :
+	Branding(const std::shared_ptr<Config> & config) :
 		ActiveCampaign(config,
 			{	"branding_edit",
 				"branding_view"
@@ -28,7 +28,7 @@ public:
 		(void)s_bRegistered;
 	}
 
-	static std::unique_ptr<ActiveCampaign> CreateMethod(const Config * config)
+	static std::unique_ptr<ActiveCampaign> CreateMethod(const std::shared_ptr<Config> & config)
 	{
 		return std::make_unique<Branding>(config);
 	}

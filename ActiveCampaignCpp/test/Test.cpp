@@ -26,7 +26,7 @@ TEST(JsonConstructionTest, NonNestedJsonConstruction)
 
 TEST(ConfigTest, ConfirmConfigParameters)
 {
-	std::unique_ptr<Config> config = std::make_unique<Config>("a", "b");
+	std::shared_ptr<Config> config = std::make_shared<Config>("a", "b");
 	EXPECT_EQ("a", config->getUrl());
 	EXPECT_EQ("b", config->getApiKey());
 	EXPECT_EQ("json", config->getFormat());
@@ -34,34 +34,34 @@ TEST(ConfigTest, ConfirmConfigParameters)
 
 TEST(UrlHandlerTest, CheckReturnValuesOfURL)
 {
-	std::unique_ptr<Config> config = std::make_unique<Config>("http://a.b.com", "xyz");
+	std::shared_ptr<Config> config = std::make_shared<Config>("http://a.b.com", "xyz");
 	json data = {
 					{ "name",		 "Dr Who" },
 					{ "sender_name", "Bleh Bleh" },
 					{ "sender_zip",	 12345 }
 				};
 
-	std::string url = UrlHandler::makeUrl("test_action", config.get());
+	std::string url = UrlHandler::makeUrl("test_action", config);
 	std::string expectedUrl = "http://a.b.com/admin/api.php?api_action=test_action&api_output=json&api_key=xyz";
 	EXPECT_EQ(url, expectedUrl);
 
-	std::string params = UrlHandler::makeParameters(config.get(), data);
+	std::string params = UrlHandler::makeParameters(config, data);
 	std::string expectedParams = "name=Dr%20Who&sender_name=Bleh%20Bleh&sender_zip=12345";
 	EXPECT_EQ(params, expectedParams);
 
-	std::string urlWithParams = UrlHandler::makeUrlWithParameters("test_action", config.get(), data);
+	std::string urlWithParams = UrlHandler::makeUrlWithParameters("test_action", config, data);
 	std::string expectedurlWithParams = "http://a.b.com/admin/api.php?api_action=test_action&api_output=json&api_key=xyz&name=Dr%20Who&sender_name=Bleh%20Bleh&sender_zip=12345";
 	EXPECT_EQ(urlWithParams, expectedurlWithParams);
 }
 
 TEST(ActiveCampaignTest, GetSupportedActionsAndAPI)
 {
-	std::unique_ptr<Config> config = std::make_unique<Config>("http://a.b.com", "xyz");
+	std::shared_ptr<Config> config = std::make_shared<Config>("http://a.b.com", "xyz");
 	std::function < json(const std::string & action, const json & data) > handler = [](const std::string & action, const json & data) { json res = { {"ret", 0} }; return res; };
 
 	auto actions = { std::string("test_action") };
 	auto handlers = { handler };
-	std::unique_ptr<ActiveCampaign> ac = std::make_unique<ActiveCampaign>( config.get(), actions, handlers);
+	std::unique_ptr<ActiveCampaign> ac = std::make_unique<ActiveCampaign>(config, actions, handlers);
 
 	std::vector<std::string> res;
 	ac->getSupportedActions(res);
@@ -79,12 +79,12 @@ TEST(ActiveCampaignTest, AutoRegisterTest)
 											"Form", "Group", "List", "Message", "Organization", "Settings", "SingleSignOn",
 											"Tags", "Tasks", "User", "WebHook"};
 
-	std::unique_ptr<Config> config = std::make_unique<Config>("http://a.b.com", "xyz");
+	std::shared_ptr<Config> config = std::make_shared<Config>("http://a.b.com", "xyz");
 
 	for (auto str : expected)
 	{
 		//In case of a problem, it will throw an exception
-		auto ac = ActiveCampaignFactory::Create(str, config.get());
+		auto ac = ActiveCampaignFactory::Create(str, config);
 	}
 }
 

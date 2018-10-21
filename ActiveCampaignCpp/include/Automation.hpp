@@ -16,7 +16,7 @@ class Automation : public ActiveCampaign, public AutoRegister<Automation>
 {
 
 public:
-	Automation(const Config * config) :
+	Automation(const std::shared_ptr<Config> & config) :
 		ActiveCampaign(config,
 			{ "automation_contact_add", "automation_contact_list", "automation_contact_remove", "automation_contact_view",
 				"automation_list"
@@ -31,7 +31,7 @@ public:
 		(void)s_bRegistered;
 	}
 
-	static std::unique_ptr<ActiveCampaign> CreateMethod(const Config * config)
+	static std::unique_ptr<ActiveCampaign> CreateMethod(const std::shared_ptr<Config> & config)
 	{
 		return std::make_unique<Automation>(config);
 	}

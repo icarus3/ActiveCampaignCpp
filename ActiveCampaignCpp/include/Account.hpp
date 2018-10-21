@@ -16,7 +16,7 @@ class Account : public ActiveCampaign, public AutoRegister<Account>
 {
 
 public:
-	Account(const Config * config) :
+	Account(const std::shared_ptr<Config> & config) :
 		ActiveCampaign( config,
 						{ "account_view" },
 						{ std::bind(&Account::accountView, this, std::placeholders::_1, std::placeholders::_2) } )
@@ -24,7 +24,7 @@ public:
 		(void)s_bRegistered;
 	}
 
-	static std::unique_ptr<ActiveCampaign> CreateMethod(const Config * config)
+	static std::unique_ptr<ActiveCampaign> CreateMethod(const std::shared_ptr<Config> & config)
 	{
 		return std::make_unique<Account>(config);
 	}

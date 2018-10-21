@@ -21,11 +21,11 @@ class ActiveCampaign : public IActiveCampaign
 	const std::vector< Handler > m_supportedActionsHandlers;
 
 protected:
-	const Config * m_config;
+	const std::shared_ptr<Config> & m_config;
 
 public:
 
-	ActiveCampaign( const Config * config,
+	ActiveCampaign(const std::shared_ptr<Config> & config,
 					std::initializer_list<std::string> supportedActions,
 					std::initializer_list<Handler> supportedActionsHandlers ) :
 		m_config(config),

@@ -17,7 +17,7 @@ class Deal : public ActiveCampaign, public AutoRegister<Deal>
 {
 
 public:
-	Deal(const Config * config) :
+	Deal(const std::shared_ptr<Config> & config) :
 		ActiveCampaign(config,
 			{	"deal_add", "deal_delete", "deal_edit", "deal_get", "deal_list", "deal_note_add",
 				"deal_note_edit", "deal_pipeline_add", "deal_pipeline_delete", "deal_pipeline_edit",
@@ -50,7 +50,7 @@ public:
 		(void)s_bRegistered;
 	}
 
-	static std::unique_ptr<ActiveCampaign> CreateMethod(const Config * config)
+	static std::unique_ptr<ActiveCampaign> CreateMethod(const std::shared_ptr<Config> & config)
 	{
 		return std::make_unique<Deal>(config);
 	}

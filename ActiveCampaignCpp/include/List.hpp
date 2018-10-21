@@ -17,7 +17,7 @@ class List : public ActiveCampaign, public AutoRegister<List>
 {
 
 public:
-	List(const Config * config) :
+	List(const std::shared_ptr<Config> & config) :
 		ActiveCampaign(config,
 			{	"list_add", "list_list", "list_delete", "list_delete_list", "list_edit", "list_field_add",
 				"list_field_delete", "list_field_edit", "list_field_view", "list_paginator",
@@ -39,7 +39,7 @@ public:
 		(void)s_bRegistered;
 	}
 
-	static std::unique_ptr<ActiveCampaign> CreateMethod(const Config * config)
+	static std::unique_ptr<ActiveCampaign> CreateMethod(const std::shared_ptr<Config> & config)
 	{
 		return std::make_unique<List>(config);
 	}
