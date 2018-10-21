@@ -3,9 +3,9 @@
 Usage
 
 	//You will need valid URL and token from ActiveCampaign. Once you have it create a Config object using it.
-	std::unique_ptr<Config> config = std::make_unique<Config>("", "");
+	std::shared_ptr<Config> config = std::make_shared<Config>("", "");
 
-	auto ac = ActiveCampaignFactory::Create("List", config.get());
+	auto ac = ActiveCampaignFactory::Create("List", config);
 
 	const json postData = {
 							{ "name" ,		"Dr Who" },
