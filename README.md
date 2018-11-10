@@ -1,5 +1,7 @@
 # ActiveCampaignCpp
 
+ActiveCampaign API wrapper in C++
+
 Usage
 
 	//You will need valid URL and token from ActiveCampaign. Once you have it create a Config object using it.
